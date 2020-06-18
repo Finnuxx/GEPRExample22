@@ -75,6 +75,10 @@ map
 -
 set
 -
+string
+-
+cstdio
+-
 Headers/Point.h
 C:/Users/A1/Documents/GitHub/GEPRExample22/Headers/Point.h
 Headers/Resource.h

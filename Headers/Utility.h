@@ -10,9 +10,18 @@
 #define GEPREXAMPLE22_UTILITY_H
 
 class Utility {
+
 public:
+
+
     static int randomMove() {
-        srand((unsigned int)time(nullptr));
+        static bool hasRand = false;
+
+        if (!hasRand) {
+            srand((unsigned int)time(nullptr));
+            hasRand = true;
+        }
+
 
         auto number = (int) round((double) rand()/RAND_MAX);
         auto prefix = (int) round((double) rand()/RAND_MAX);
@@ -20,20 +29,25 @@ public:
         return prefix == 0 ? number * -1 : number;
     }
 
-    static int randomRangeX(int upperBoundary) {
-        srand((unsigned int)time(nullptr));
+    static int randomRange(int upperBoundary) {
+        static bool hasRand = false;
+
+        if (!hasRand) {
+            srand((unsigned int)time(nullptr));
+            hasRand = true;
+        }
 
         return rand() % upperBoundary;
     }
 
-    static int randomRangeY(int upperBoundary) {
-        srand((unsigned int)time(nullptr));
-
-        return rand() % upperBoundary;
-    }
 
     static int randomWithTimeRange(int upperBoundary) {
-        srand((unsigned int)time(nullptr));
+        static bool hasRand = false;
+
+        if (!hasRand) {
+            srand((unsigned int)time(nullptr));
+            hasRand = true;
+        }
 
         return rand() % upperBoundary;
     }

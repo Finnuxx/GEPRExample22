@@ -15,9 +15,9 @@ std::recursive_mutex mtx;
 
 class Game {
 private:
-    Field* field;
+    Field *field;
 
-    bool static gameNotOver(std::map<string, Resource*> resources) { // time-complexity O(n)
+    bool static gameNotOver(std::map<string, Resource *> resources) { // time-complexity O(n)
 
         if (mtx.try_lock()) {
             for (auto resource: resources) {
@@ -45,7 +45,7 @@ public:
         return sum;
     }
 
-    void static runRobot(Robot* robot, std::map<string, Resource*> resources) {
+    void static runRobot(Robot *robot, std::map<string, Resource *> resources) {
 
         while (Game::gameNotOver(resources)) {
             if (mtx.try_lock()) {
@@ -62,18 +62,13 @@ public:
         }
     }
 
-    /*void static renderGame(Field* field) {
-        int round = 0;
-        while (Game::gameNotOver(field->getResources())) {
-            cout << "Round " << round << endl;
-            if (mtx.try_lock()) {
-                cout << field->render();
-                mtx.unlock();
-            }
-
-            round++;
+    void static renderGame(Field* field) {
+        if (mtx.try_lock()) {
+            cout << field->render();
+            mtx.unlock();
         }
-    }*/
+    }
+
 
     int run() {
         int maxResources = getMaxResources();
@@ -88,19 +83,38 @@ public:
             pos++;
         }
 
-        //std::thread renderThread (renderGame, this->field);
+        renderGame(this->field);
+
 
         for (int i = 0; i < size; i++) {
             myThreads[i].join();
         }
-        //renderThread.join();
 
 
         cout << "Maximum available Resources: " << maxResources << endl;
 
         int maxRobotResourceCounter = 0;
         int countRobots = 0;
+
+        Robot *robots[this->field->getRobots().size()];
+        int robPos = 0;
         for (auto robot: this->field->getRobots()) {
+            robots[robPos] = robot;
+            robPos++;
+        }
+
+        for (auto i = 0; i < this->field->getRobots().size(); i++) {
+            for (auto j = i + 1; j < this->field->getRobots().size(); j++) {
+                if (robots[i]->getResourceCounter() < robots[j]->getResourceCounter()) {
+                    Robot *temp = robots[i];
+                    robots[i] = robots[j];
+                    robots[j] = temp;
+                }
+            }
+        }
+
+
+        for (auto robot: robots) {
             countRobots++;
 
             int robotResourceCounter = robot->getResourceCounter();
@@ -108,6 +122,7 @@ public:
 
             cout << "Robot " << countRobots << ": " << robotResourceCounter << endl;
         }
+
         cout << "Totally harvested resources: " << maxRobotResourceCounter << endl;
 
         return 0;
