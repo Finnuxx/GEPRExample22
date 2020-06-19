@@ -2,6 +2,7 @@
 #include <set>
 #include <string>
 #include <cstdio>
+#include <chrono>
 
 #include "Headers/Point.h"
 #include "Headers/Resource.h"
@@ -10,6 +11,8 @@
 #include "Headers/MoveStrategy.h"
 #include "Headers/Utility.h"
 #include "Headers/Game.h"
+
+using namespace std::chrono;
 
 int X_BOUNDARY;
 int Y_BOUNDARY;
@@ -92,7 +95,12 @@ int main() {
 
     Game* game = new Game(field);
 
+    auto start = high_resolution_clock::now();
     game->run();
+    auto stop = high_resolution_clock::now();
+
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "The robots took " << duration.count() << " seconds to mine all resources!" << endl;
 
     cin.clear();
     cin.ignore(256, '\n');

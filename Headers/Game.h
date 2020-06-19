@@ -73,6 +73,7 @@ public:
     int run() {
         int maxResources = getMaxResources();
         cout << "Maximum available Resources: " << maxResources << endl;
+        renderGame(this->field);
 
         int size = this->field->getRobots().size();
         std::thread myThreads[size];
@@ -83,15 +84,9 @@ public:
             pos++;
         }
 
-        renderGame(this->field);
-
-
         for (int i = 0; i < size; i++) {
             myThreads[i].join();
         }
-
-
-        cout << "Maximum available Resources: " << maxResources << endl;
 
         int maxRobotResourceCounter = 0;
         int countRobots = 0;
