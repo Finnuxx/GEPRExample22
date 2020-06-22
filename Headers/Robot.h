@@ -23,6 +23,10 @@ public:
         this->strategy->move(location);
     }
 
+    void move2() {
+        this->strategy->move2(location);
+    }
+
     string render() {
         return "x";
     }

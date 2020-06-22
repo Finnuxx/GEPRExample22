@@ -66,7 +66,7 @@ int main() {
     }
     cout << endl;
 
-    MoveStrategy* moveStrategy = new MoveStrategy(X_BOUNDARY);
+    MoveStrategy* moveStrategy = new MoveStrategy(X_BOUNDARY, Y_BOUNDARY);
 
     std::map<string, Resource*> resources;
     int amount_resources = Utility::randomRange(RESOURCE_AMOUNT);
