@@ -17,15 +17,12 @@ private:
 
 public:
     Robot(Point *location, MoveStrategy *strategy, int resourceCounter) : location(location), strategy(strategy),
-                                                                          resourceCounter(resourceCounter) {}
+                                                                        resourceCounter(resourceCounter) {}
 
     void move() {
         this->strategy->move(location);
     }
 
-    void move2() {
-        this->strategy->move2(location);
-    }
 
     string render() {
         return "x";

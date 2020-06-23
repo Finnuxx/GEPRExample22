@@ -25,20 +25,20 @@ int main() {
     cout << "Welcome to Robominer!" << endl;
     cout << "Please insert the size of the field!" << endl;
     cout << "Width: ";
-    cin >> Y_BOUNDARY;
-    while (cin.fail()) {
-        cout << "Please insert an integer!" << endl;
-        cin.clear();
-        cin.ignore(256, '\n');
-        cin >> Y_BOUNDARY;
-    }
-    cout << "Height: ";
     cin >> X_BOUNDARY;
     while (cin.fail()) {
         cout << "Please insert an integer!" << endl;
         cin.clear();
         cin.ignore(256, '\n');
         cin >> X_BOUNDARY;
+    }
+    cout << "Height: ";
+    cin >> Y_BOUNDARY;
+    while (cin.fail()) {
+        cout << "Please insert an integer!" << endl;
+        cin.clear();
+        cin.ignore(256, '\n');
+        cin >> Y_BOUNDARY;
     }
     cout << "Maximum fields with resources: ";
     cin >> RESOURCE_AMOUNT;
@@ -66,7 +66,6 @@ int main() {
     }
     cout << endl;
 
-    MoveStrategy* moveStrategy = new MoveStrategy(X_BOUNDARY, Y_BOUNDARY);
 
     std::map<string, Resource*> resources;
     int amount_resources = Utility::randomRange(RESOURCE_AMOUNT);
@@ -83,10 +82,34 @@ int main() {
 
     std::set<Robot*> robots;
     for (int i = 0; i < ROBOT_AMOUNT; i++) {
-        int x, y;
+        int x, y, selection;
         x = Utility::randomRange(X_BOUNDARY);
         y = Utility::randomRange(Y_BOUNDARY);
         Point* robotPoint = new Point(x, y);
+
+        cout << "Please select strategy:\n";
+        cout << "0) random \n";
+        cout << "1) row by row \n";
+
+        cin >> selection;
+        while (selection > 2 || cin.fail()) {
+            cout << "Please insert an integer 0 or 1!" << endl;
+            cin.clear();
+            cin.ignore(256, '\n');
+            cin >> selection;
+        }
+
+        MoveStrategy* moveStrategy;
+
+        switch (selection) {
+            case 0:
+                moveStrategy = new RandomMove(X_BOUNDARY, Y_BOUNDARY);
+                break;
+
+            case 1:
+                moveStrategy = new RowByRowMove(X_BOUNDARY, Y_BOUNDARY);
+                break;
+        }
 
         robots.insert(new Robot(robotPoint, moveStrategy, 0));
     }
@@ -110,3 +133,4 @@ int main() {
 
     return 0;
 }
+

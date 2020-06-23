@@ -25,9 +25,6 @@ private:
     set<Robot*> robots;
 
 public:
-    Field(const map<string, Resource *> &resources, const set<Robot*> & robots) : resources(resources), robots(robots) {}
-
-    Field(map<string, Resource *> resources) : resources(resources) {}
 
     Field(const map<string, Resource *> &resources, int sizeX, int sizeY, const set<Robot *> & robots) : resources(
             resources), sizeX(sizeX), sizeY(sizeY), robots(robots) {}
@@ -36,8 +33,8 @@ public:
         string field;
 
 
-        for (int x = 0; x < sizeX; x++) {
-            for (int y = 0; y < sizeY; y++) {
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
                 bool paintRobot = false;
 
                 for (auto robot: this->robots) {

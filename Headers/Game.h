@@ -49,7 +49,7 @@ public:
 
         while (Game::gameNotOver(resources)) {
             if (mtx.try_lock()) {
-                robot->move2();
+                robot->move();
 
                 string coordinateKey = robot->getCoordinateKey();
                 if (resources.count(coordinateKey) > 0) {
