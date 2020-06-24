@@ -45,14 +45,14 @@ public:
 
 };
 
-class RowByRowMove: public MoveStrategy {
+class RowByRowMove: public MoveStrategy { //another moveStrategy (rowbyrow)
 private:
     int lowerBoundary = 0;
     int xBoundary = 100; // currently we think of symmetrical fields (square)
     int yBoundary = 100;
 
 
-    int moveLeft(int value) {
+    int moveLeft(int value) { // is the same like moveUp() but the code is easier to read now
         int moveLeft = value - 1;
 
         return moveLeft >= lowerBoundary
@@ -63,35 +63,35 @@ private:
                 ;
     }
 
-    int moveUp(int value) {
-        int moveLeft = value - 1;
+    int moveUp(int value) { // is the same like moveLeft() but the code is easier to read now
+        int moveUp = value - 1;
 
-        return moveLeft >= lowerBoundary
-               ? moveLeft <= xBoundary-1
-                 ? moveLeft
+        return moveUp >= lowerBoundary
+               ? moveUp <= yBoundary - 1
+                 ? moveUp
+                 : yBoundary-1
+               : lowerBoundary
+                ;
+    }
+
+    int moveRight(int value) { // is the same like moveDown() but the code is easier to read now
+        int moveRight = value + 1;
+
+        return moveRight >= lowerBoundary
+               ? moveRight <= xBoundary - 1
+                 ? moveRight
                  : xBoundary-1
                : lowerBoundary
                 ;
     }
 
-    int moveRight(int value) {
-        int moveLeft = value + 1;
+    int moveDown(int value) { // is the same like moveRight() but the code is easier to read now
+        int moveDown = value + 1;
 
-        return moveLeft >= lowerBoundary
-               ? moveLeft <= xBoundary-1
-                 ? moveLeft
-                 : xBoundary-1
-               : lowerBoundary
-                ;
-    }
-
-    int moveDown(int value) {
-        int moveLeft = value + 1;
-
-        return moveLeft >= lowerBoundary
-               ? moveLeft <= xBoundary-1
-                 ? moveLeft
-                 : xBoundary-1
+        return moveDown >= lowerBoundary
+               ? moveDown <= yBoundary - 1
+                 ? moveDown
+                 : yBoundary-1
                : lowerBoundary
                 ;
     }
@@ -108,17 +108,6 @@ public:
 
 
     void move(Point* p) {
-
-
-        /*while (p->getX() > 0 && !isInFirstRow) {
-            p->setX(this->moveLeftOrUp(p->getX()));
-        }
-        isInFirstRow = true;
-
-        while (p->getY() > 0 && !isInFirstColumn) {
-            p->setY(this->moveLeftOrUp(p->getY()));
-        }
-        isInFirstColumn = true;*/
 
         if (isRowDoneLeft && isOnTheTop && !thisRowIsDone) { //goes right down
             p->setX(this->moveRight(p->getX()));
@@ -172,19 +161,19 @@ public:
             p->setY(this->moveDown(p->getY())); //next row down if is on right side
             thisRowIsDone = false;
             return;
-        } else if (p->getX() == lowerBoundary && isOnTheTop && thisRowIsDone) {
+        } else if (p->getX() == lowerBoundary && isOnTheTop && thisRowIsDone) { //is left upper corner
             isRowDoneLeft = true;
             isRowDoneRight = false;
             p->setY(this->moveDown(p->getY())); //nex row down if is on left side
             thisRowIsDone = false;
             return;
-        } else if (p->getX() == xBoundary-1 && isOnTheBottom && thisRowIsDone) {
+        } else if (p->getX() == xBoundary-1 && isOnTheBottom && thisRowIsDone) { //is right lower corner
             isRowDoneLeft = false;
             isRowDoneRight = true;
             p->setY(this->moveUp(p->getY())); //next row up if is on right side
             thisRowIsDone = false;
             return;
-        } else if (p->getX() == lowerBoundary && isOnTheBottom && thisRowIsDone) {
+        } else if (p->getX() == lowerBoundary && isOnTheBottom && thisRowIsDone) { //is left lower corner
             isRowDoneLeft = true;
             isRowDoneRight = false;
             p->setY(this->moveUp(p->getY())); //nex row up if is on left side
