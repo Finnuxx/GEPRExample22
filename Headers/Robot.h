@@ -14,8 +14,14 @@ private:
     Point* location;
     MoveStrategy* strategy;
     int resourceCounter;
+    //bool isOnTheTop;
+    //bool isRowDoneLeft;
 
 public:
+    /*Robot(Point *location, MoveStrategy *strategy, int resourceCounter, bool isOnTheTop, bool isRowDoneLeft) : location(
+            location), strategy(strategy), resourceCounter(resourceCounter), isOnTheTop(isOnTheTop), isRowDoneLeft(
+            isRowDoneLeft) {}*/
+
     Robot(Point *location, MoveStrategy *strategy, int resourceCounter) : location(location), strategy(strategy),
                                                                         resourceCounter(resourceCounter) {}
 

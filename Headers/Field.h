@@ -19,8 +19,8 @@ using namespace std;
 class Field: public Renderer {
 private:
     std::map<string, Resource*> resources;
-    int sizeX = 50;
-    int sizeY = 50;
+    int sizeX;
+    int sizeY;
 
     set<Robot*> robots;
 
